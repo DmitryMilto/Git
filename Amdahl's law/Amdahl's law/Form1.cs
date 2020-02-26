@@ -6,6 +6,46 @@ namespace Amdahl_s_law
 {
     public partial class Form1 : Form
     {
+        private void radioButtonGraph_CheckedChanged(object sender, EventArgs e)
+        {
+            chartGraph.Visible = radioButtonGraph.Checked;
+        }
+        private void radioButtonText_CheckedChanged(object sender, EventArgs e)
+        {
+            richResultBase.Visible = radioButtonText.Checked;
+        }
+        private void radioGraphNetWork_CheckedChanged(object sender, EventArgs e)
+        {
+            chartGraphNetWork.Visible = radioGraphNetWork.Checked;
+        }
+        private void radioRusiltNetWork_CheckedChanged(object sender, EventArgs e)
+        {
+            richTextNetwork.Visible = radioRusiltNetWork.Checked;
+        }
+        private void radioRABase_CheckedChanged(object sender, EventArgs e)
+        {
+            groupRABase.Visible = radioRABase.Checked;
+        }
+        private void radioRNBase_CheckedChanged(object sender, EventArgs e)
+        {
+            groupRNBase.Visible = radioRNBase.Checked;
+        }
+        private void radioRANw_CheckedChanged(object sender, EventArgs e)
+        {
+            groupRaNW.Visible = radioRANw.Checked;
+        }
+        private void radioRNNw_CheckedChanged(object sender, EventArgs e)
+        {
+            groupRnNW.Visible = radioRNNw.Checked;
+        }
+        private void radioRCaNw_CheckedChanged(object sender, EventArgs e)
+        {
+            groupRCaNW.Visible = radioRCaNw.Checked;
+        }
+        private void radioRCtNw_CheckedChanged(object sender, EventArgs e)
+        {
+            groupRCtNW.Visible = radioRCtNw.Checked;
+        }
         public Form1()
         {
             InitializeComponent();
@@ -13,132 +53,58 @@ namespace Amdahl_s_law
             richResultBase.Visible = radioButtonText.Checked;
             chartGraphNetWork.Visible = radioGraphNetWork.Checked;
             richTextNetwork.Visible = radioRusiltNetWork.Checked;
+
+            groupRABase.Visible = radioRABase.Checked;
+            groupRNBase.Visible = radioRNBase.Checked;
+
+            groupRaNW.Visible = radioRANw.Checked;
+            groupRnNW.Visible = radioRNNw.Checked;
+            groupRCaNW.Visible = radioRCaNw.Checked;
+            groupRCtNW.Visible = radioRCtNw.Checked;
         }
 
         private void calculateBasicLaw_Click(object sender, EventArgs e)
         {
-            AmdahlsLawBase amdahlsLaw = new AmdahlsLawBase(textBoxABase.Text.ToString(),
-                textBoxNMinBase.Text.ToString(), textBoxNMaxBase.Text.ToString(), textBoxStepBase.Text.ToString());
+            AmdahlsLaw amdahlsLaw = new AmdahlsLaw();
+
+            if (radioRNBase.Checked)
+                amdahlsLaw.R_N_Base(textABase.Text.ToString(),
+                    textNMinBase.Text.ToString(), textNMaxBase.Text.ToString(), textNStepBase.Text.ToString(), "R_N_Base");
+            else
+                amdahlsLaw.R_A_Base(textAMinBase.Text.ToString(),
+                    textAMaxBase.Text.ToString(), textNBase.Text.ToString(), textAStepBase.Text.ToString(), "R_A_Base");
 
             amdahlsLaw.ResultText(richResultBase);
             amdahlsLaw.ResultGraph(chartGraph);
         }
-
-        private void radioButtonGraph_CheckedChanged(object sender, EventArgs e)
-        {
-            chartGraph.Visible = radioButtonGraph.Checked;
-        }
-
-        private void radioButtonText_CheckedChanged(object sender, EventArgs e)
-        {
-            richResultBase.Visible = radioButtonText.Checked;
-        }
-
         private void buttonNetWork_Click(object sender, EventArgs e)
         {
-            AmdahlsLawBase amdahlsLaw = new AmdahlsLawBase(textBoxANetWork.Text.ToString(),
-                textBoxNMinNetWork.Text.ToString(), textBoxNMaxNetWork.Text.ToString(), textBoxStepNetWork.Text.ToString(),
-                textBoxCaNetWork.Text.ToString(), textBoxCtNetWork.Text.ToString());
+            AmdahlsLaw amdahlsLaw = new AmdahlsLaw();
 
-            amdahlsLaw.ResultTextNetWork(richTextNetwork);
-            amdahlsLaw.ResultGraphNetWork(chartGraphNetWork);
-        }
 
-        private void radioGraphNetWork_CheckedChanged(object sender, EventArgs e)
-        {
-            chartGraphNetWork.Visible = radioGraphNetWork.Checked;
-        }
 
-        private void radioRusiltNetWork_CheckedChanged(object sender, EventArgs e)
-        {
-            richTextNetwork.Visible = radioRusiltNetWork.Checked;
-        }
-    }
+            if (radioRANw.Checked)
+                amdahlsLaw.R_A_NW(textAMinNW.Text.ToString(),
+            textAMaxNW.Text.ToString(), textNNW.Text.ToString(), textAStepNW.Text.ToString(),
+            textCa_NW.Text.ToString(), textCt_NW.Text.ToString(), "R_A_NW");
 
-    public class AmdahlsLawBase
-    {
-        double a { get; set; }
-        double a_min { get; set; }
-        double a_max { get; set; }
-        double n_min { get; set; }
-        double n_max { get; set; }
-        double step { get; set; }
-        double c_a { get; set; }
-        double c_a_min { get; set; }
-        double c_a_max { get; set; }
-        double c_t { get; set; }
-        double c_t_min { get; set; }
-        double c_t_max { get; set; }
-        double c { get; set; }
+            if (radioRNNw.Checked)
+                amdahlsLaw.R_N_NW(textANW.Text.ToString(),
+        textNMinNW.Text.ToString(), textNMaxNW.Text.ToString(), textNStepNW.Text.ToString(),
+        textCaNW.Text.ToString(), textCtNW.Text.ToString(), "R_N_NW");
 
-        public AmdahlsLawBase(string A, string N_min, string N_max, string Step)
-        {
-            a = Convert.ToDouble(A) / 100;
-            n_min = Convert.ToDouble(N_min);
-            n_max = Convert.ToDouble(N_max);
-            step = Convert.ToDouble(Step);
-        }
-        public AmdahlsLawBase(string A, string N_min, string N_max, string Step, string C_a, string C_t)
-        {
-            a = Convert.ToDouble(A) / 100;
-            n_min = Convert.ToDouble(N_min);
-            n_max = Convert.ToDouble(N_max);
-            step = Convert.ToDouble(Step);
-            c_a = Convert.ToDouble(C_a);
-            c_t = Convert.ToDouble(C_t);
-            c = c_a * c_t;
-        }
+            if (radioRCaNw.Checked)
+                amdahlsLaw.R_Ca_NW(textACa.Text.ToString(),
+            textNCa.Text.ToString(), textCaMin.Text.ToString(), textCaMax.Text.ToString(),
+            textCt.Text.ToString(), textCaStep.Text.ToString(), "R_Ca_NW");
 
-        public void ResultText(RichTextBox richTextBox)
-        {
-            double R;
-            double min = n_min;
-            richTextBox.Clear();
-            richTextBox.Text = "Доля последовательных вычислений в алгоритме равна " + a * 100 + " % \n";
-            while (n_max > min)
-            {
-                R = 1 / (a + (1 - a) / min);
-                richTextBox.Text += "R = " + R + " n = " + min + "\n";
-                min += step;
-            }
-        }
-        public void ResultGraph(Chart chart)
-        {
-            double R;
-            double min = n_min;
-            chart.Series[0].Points.Clear();
-            while (n_max > min)
-            {
-                R = 1 / (a + (1 - a) / min);
-                chart.Series[0].Points.AddXY(min, R);
-                min += step;
-            }
-        }
-        public void ResultTextNetWork(RichTextBox richTextBox)
-        {
-            double R;
-            double min = n_min;
-            richTextBox.Clear();
-            richTextBox.Text = "Доля последовательных вычислений в алгоритме равна " + a * 100 + " % \n";
-            richTextBox.Text += "Коэффициент сетевой деградации вычислений равна " + c + "\n";
-            while (n_max > min)
-            {
-                R = 1 / (c + a + (1 - a) / min);
-                richTextBox.Text += "R = " + R + " n = " + min + "\n";
-                min += step;
-            }
-        }
-        public void ResultGraphNetWork(Chart chart)
-        {
-            double R;
-            double min = n_min;
-            chart.Series[0].Points.Clear();
-            while (n_max > min)
-            {
-                R = 1 / (c + a + (1 - a) / min);
-                chart.Series[0].Points.AddXY(min, R);
-                min += step;
-            }
+            if (radioRCtNw.Checked)
+                amdahlsLaw.R_Ct_NW(textACt.Text.ToString(),
+            textNCt.Text.ToString(), textCaCt.Text.ToString(), textCtMin.Text.ToString(),
+            textCtMax.Text.ToString(), textCtStep.Text.ToString(), "R_Ct_NW");
+
+            amdahlsLaw.ResultText(richTextNetwork);
+            amdahlsLaw.ResultGraph(chartGraphNetWork);
         }
     }
 }
